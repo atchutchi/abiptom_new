@@ -1,97 +1,51 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import Aurora from '@/components/reactbits/Aurora'
+import BlurText from '@/components/reactbits/BlurText'
 
 export default function HeroSection() {
-  const heroRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    if (!heroRef.current) return
-
-    ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: 'top top',
-      end: '+=100%',
-      pin: true,
-      pinSpacing: true,
-    })
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill())
-    }
-  }, [])
-
   return (
-    <section
-      ref={heroRef}
-      className="relative w-full h-screen overflow-hidden bg-black"
-      data-header-color="transparent"
-    >
-      {/* Background gradient as placeholder for video/image */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-black-soft to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,197,24,0.08)_0%,transparent_70%)]" />
-      </div>
+    <section className="relative w-full h-screen overflow-hidden bg-black" data-header-color="transparent">
+      <Aurora colors={['#F5C518', '#E6B800', '#C9A000']} />
 
-      {/* SVG Mask with ABIPTOM text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <svg
-          viewBox="0 0 1200 200"
-          className="w-[90vw] max-w-[1200px]"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <mask id="abiptom-mask">
-              <rect width="100%" height="100%" fill="white" />
-              <text
-                x="50%"
-                y="50%"
-                dominantBaseline="central"
-                textAnchor="middle"
-                fontSize="180"
-                fontFamily="'Bebas Neue', sans-serif"
-                fontWeight="400"
-                fill="black"
-                letterSpacing="0.05em"
-              >
-                ABIPTOM
-              </text>
-            </mask>
-          </defs>
-          <rect
-            width="100%"
-            height="100%"
-            fill="#F5C518"
-            mask="url(#abiptom-mask)"
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
+        <h1 className="text-[clamp(80px,14vw,220px)] font-display uppercase leading-none text-yellow tracking-wider">
+          ABIPTOM
+        </h1>
+
+        <div className="mt-6">
+          <BlurText
+            text="Marketing · Design · Tecnologia"
+            className="text-lg md:text-2xl text-white/80 font-light tracking-wider justify-center"
+            delay={80}
+            animateBy="words"
           />
-        </svg>
-      </div>
+        </div>
 
-      {/* Bottom left text */}
-      <div className="absolute bottom-8 left-6 md:left-16">
-        <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-          Bissau · Guiné-Bissau
-        </p>
-      </div>
-
-      {/* Bottom right scroll indicator */}
-      <div className="absolute bottom-8 right-6 md:right-16 flex items-center gap-2">
-        <span className="text-xs uppercase tracking-[0.2em] text-white/60">Scroll</span>
-        <svg
-          width="12"
-          height="24"
-          viewBox="0 0 12 24"
-          fill="none"
-          className="animate-bounce"
-        >
-          <path
-            d="M6 0V22M6 22L1 17M6 22L11 17"
-            stroke="rgba(255,255,255,0.6)"
-            strokeWidth="1.5"
+        <div className="mt-4">
+          <BlurText
+            text="Bissau, Guiné-Bissau"
+            className="text-sm text-white/40 uppercase tracking-[0.3em] justify-center"
+            delay={120}
+            animateBy="letters"
           />
-        </svg>
+        </div>
       </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="text-xs uppercase tracking-[0.2em] text-white/40">Scroll</span>
+        <div className="w-px h-8 bg-white/20 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-yellow animate-[scrollLine_1.5s_ease-in-out_infinite]" />
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes scrollLine {
+          0% { transform: translateY(-100%); }
+          50% { transform: translateY(0); }
+          100% { transform: translateY(100%); }
+        }
+      `}</style>
     </section>
   )
 }

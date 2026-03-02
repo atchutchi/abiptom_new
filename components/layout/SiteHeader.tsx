@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import FullscreenNav from './FullscreenNav'
 
 export default function SiteHeader() {
@@ -36,7 +37,15 @@ export default function SiteHeader() {
         }`}
       >
         <div className="flex items-center justify-between px-6 md:px-16 py-5">
-          <Link href="/" className="relative z-50">
+          <Link href="/" className="relative z-50 flex items-center gap-2">
+            <Image
+              src="/images/logo_abiptom.png"
+              alt="ABIPTOM"
+              width={40}
+              height={40}
+              className="w-8 h-8 md:w-10 md:h-10"
+              priority
+            />
             <span className="text-2xl md:text-3xl font-display tracking-wider text-yellow">
               ABIPTOM
             </span>

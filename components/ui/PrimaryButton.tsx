@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import StarBorder from '@/components/reactbits/StarBorder'
 import { cn } from '@/lib/utils'
 
 interface PrimaryButtonProps {
@@ -7,7 +8,7 @@ interface PrimaryButtonProps {
   children: React.ReactNode
   className?: string
   type?: 'button' | 'submit'
-  variant?: 'yellow' | 'outline'
+  variant?: 'yellow' | 'outline' | 'star'
 }
 
 export default function PrimaryButton({
@@ -22,21 +23,20 @@ export default function PrimaryButton({
   const variants = {
     yellow: 'bg-yellow text-black hover:bg-yellow-hover',
     outline: 'bg-transparent text-white border border-white/30 hover:border-yellow hover:text-yellow',
+    star: '',
   }
 
   const styles = cn(baseStyles, variants[variant], className)
 
-  if (href) {
-    return (
-      <Link href={href} className={styles}>
-        {children}
-      </Link>
-    )
+  const inner = href ? (
+    <Link href={href} className={styles}>{children}</Link>
+  ) : (
+    <button type={type} onClick={onClick} className={styles}>{children}</button>
+  )
+
+  if (variant === 'star') {
+    return <StarBorder>{inner}</StarBorder>
   }
 
-  return (
-    <button type={type} onClick={onClick} className={styles}>
-      {children}
-    </button>
-  )
+  return inner
 }

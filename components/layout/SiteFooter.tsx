@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Facebook, Instagram, Linkedin, Youtube, Music2, Mail, Phone, MapPin } from 'lucide-react'
 import { socialLinks, contactInfo } from '@/lib/data'
 
@@ -37,7 +38,10 @@ export default function SiteFooter() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Logo & Description */}
           <div>
-            <span className="text-3xl font-display tracking-wider text-yellow">ABIPTOM</span>
+            <div className="flex items-center gap-3">
+              <Image src="/images/logo_abiptom.png" alt="ABIPTOM" width={48} height={48} className="w-12 h-12" />
+              <span className="text-3xl font-display tracking-wider text-yellow">ABIPTOM</span>
+            </div>
             <p className="mt-4 text-sm text-white/60 leading-relaxed">
               Transformamos ideias em realidade digital. Marketing, Design e Tecnologia ao serviço do seu negócio.
             </p>

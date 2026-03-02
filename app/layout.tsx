@@ -3,7 +3,6 @@ import './globals.css'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import BackToTop from '@/components/ui/BackToTop'
-import GSAPProvider from '@/components/providers/GSAPProvider'
 
 export const metadata: Metadata = {
   title: {
@@ -37,12 +36,10 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className="font-sans antialiased">
-        <GSAPProvider>
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
-          <BackToTop />
-        </GSAPProvider>
+        <SiteHeader />
+        <main>{children}</main>
+        <SiteFooter />
+        <BackToTop />
       </body>
     </html>
   )

@@ -1,58 +1,47 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from '@/lib/gsap'
+import Image from 'next/image'
+import TiltedCard from '@/components/reactbits/TiltedCard'
+import FadeContent from '@/components/reactbits/FadeContent'
+import ScrollFloat from '@/components/reactbits/ScrollFloat'
 import { teamMembers } from '@/lib/data'
-import { User } from 'lucide-react'
+
+function getInitials(name: string): string {
+  return name.split(' ').filter((_, i, arr) => i === 0 || i === arr.length - 1).map((w) => w[0]).join('').toUpperCase()
+}
 
 export default function TeamSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    const cards = containerRef.current.querySelectorAll('.team-card')
-    gsap.fromTo(
-      cards,
-      { x: 280, opacity: 0 },
-      {
-        x: 0,
-        opacity: 1,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 75%',
-          once: true,
-        },
-      }
-    )
-  }, [])
-
   return (
-    <section className="py-20 px-6 md:px-16 bg-white-off">
+    <section className="py-24 md:py-32 px-6 md:px-16 bg-white-off" data-header-color="black">
       <div className="max-w-7xl mx-auto">
-        <h2 className="slide-in-heading text-[clamp(36px,5vw,72px)] font-display uppercase text-black leading-tight mb-12">
-          Equipa
-        </h2>
+        <ScrollFloat className="mb-16">
+          <h2 className="text-[clamp(36px,5vw,72px)] font-display uppercase text-black leading-tight">
+            A Nossa <span className="text-yellow-dark">Equipa</span>
+          </h2>
+        </ScrollFloat>
 
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {teamMembers.map((member) => (
-            <div key={member.name} className="team-card bg-white p-8 group">
-              <div className="w-20 h-20 rounded-full bg-gray-light flex items-center justify-center mb-6">
-                <User size={32} className="text-gray-dark" />
-              </div>
-              <h3 className="text-lg font-black uppercase text-black">
-                {member.name}
-              </h3>
-              <div className="flex items-center gap-3 mt-2">
-                <span className="h-px w-8 bg-yellow flex-shrink-0" />
-                <span className="text-xs uppercase tracking-widest text-gray-dark">
-                  {member.role}
-                </span>
-              </div>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {teamMembers.map((member, index) => (
+            <FadeContent key={member.name} delay={index * 0.1} direction="up">
+              <TiltedCard className="bg-white overflow-hidden h-full">
+                <div className="p-8 md:p-10">
+                  <div className="w-24 h-24 rounded-full overflow-hidden mb-8 relative">
+                    {member.image ? (
+                      <Image src={member.image} alt={member.name} fill className="object-cover" sizes="96px" />
+                    ) : (
+                      <div className="w-full h-full bg-black flex items-center justify-center">
+                        <span className="text-xl font-display text-yellow">{getInitials(member.name)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-black uppercase text-black leading-tight">{member.name}</h3>
+                  <div className="flex items-center gap-3 mt-3">
+                    <span className="h-px w-10 bg-yellow shrink-0" />
+                    <span className="text-xs uppercase tracking-[0.12em] text-gray-dark font-semibold">{member.role}</span>
+                  </div>
+                </div>
+              </TiltedCard>
+            </FadeContent>
           ))}
         </div>
       </div>

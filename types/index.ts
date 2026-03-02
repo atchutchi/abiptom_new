@@ -28,6 +28,7 @@ export interface Service {
   slug: string
   icon: string
   description: string
+  image?: string
 }
 
 export interface TeamMember {

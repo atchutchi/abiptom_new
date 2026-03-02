@@ -32,17 +32,21 @@ export default function AnimatedSection({
     }
 
     const anim = animations[animation]
-    gsap.fromTo(el, anim.from, {
-      ...anim.to,
-      duration: 1,
-      delay,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-      },
-    })
+    const ctx = gsap.context(() => {
+      gsap.fromTo(el, anim.from, {
+        ...anim.to,
+        duration: 1,
+        delay,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+        },
+      })
+    }, el)
+
+    return () => ctx.revert()
   }, [animation, delay])
 
   return (
